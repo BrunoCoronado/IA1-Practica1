@@ -1,0 +1,99 @@
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h3>Selecciona un Archivo</h3>
+        <input type="file" #csvReader (change)="uploadListener($event)" accept=".csv" />
+        <h3>Seleccione un Criterio de Finalización</h3>
+        <div class="form-group">
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="tipo1" name="radioTipo" [value]="1"
+              [(ngModel)]="criterioFinalizacion">
+            <label for="tipo1" class="custom-control-label">Máximo número de generaciones (5000) </label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="tipo2" name="radioTipo" [value]="2"
+              [(ngModel)]="criterioFinalizacion">
+            <label for="tipo2" class="custom-control-label">Una solución con fitness menor o igual a 10</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="tipo3" name="radioTipo" [value]="3"
+              [(ngModel)]="criterioFinalizacion">
+            <label for="tipo3" class="custom-control-label">25% de soluciones con fitness menor o igual a 25</label>
+          </div>
+        </div>
+        <h3>Seleccione un Método de Selección de Padres</h3>
+        <div class="form-group">
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="estado1" name="radioEstado" [value]="1"
+              [(ngModel)]="seleccionPadres">
+            <label for="estado1" class="custom-control-label">Selección Aleatoria</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="estado2" name="radioEstado" [value]="2"
+              [(ngModel)]="seleccionPadres">
+            <label for="estado2" class="custom-control-label">Selección Por Mejor Fitness</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="estado3" name="radioEstado" [value]="3"
+              [(ngModel)]="seleccionPadres">
+            <label for="estado3" class="custom-control-label">Selección Por Torneo</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" (click)="generarModelo()">Generar Modelo</button>
+      </div>
+      <div *ngIf="solucion.length > 0" class="col-6"> 
+        <br>
+        <h4>NC = w1P1 + w2P2 + w3P3 + w4P4</h4>
+        <h6>w1 = {{ solucion[0] }} &nbsp; w2 = {{ solucion[1] }} <br> w3 = {{ solucion[2] }} &nbsp; w4 = {{ solucion[3] }}</h6>
+        <br>
+        <h4>Predecir Nota del Estudiante</h4>
+        <div class="row">
+          <div class="col-6">
+            <input [(ngModel)]="notas.proyecto1" name="proyecto1" type="text" class="form-control" id="proyecto1" placeholder="Proyecto 1">
+            <br>
+          </div>
+          <div class="col-6">
+            <input [(ngModel)]="notas.proyecto2" name="proyecto2" type="text" class="form-control" id="proyecto2" placeholder="Proyecto 2">
+            <br>
+          </div>
+          <div class="col-6">
+            <input [(ngModel)]="notas.proyecto3" name="proyecto3" type="text" class="form-control" id="proyecto3" placeholder="Proyecto 3">
+            <br>
+          </div>
+          <div class="col-6">
+            <input [(ngModel)]="notas.proyecto4" name="proyecto4" type="text" class="form-control" id="proyecto4" placeholder="Proyecto 4">
+            <br>
+          </div>
+        </div>
+        <h4 *ngIf="nc">Nota Predecida = {{nc}}</h4>
+        <button type="submit" class="btn btn-primary btn-block" (click)="calcularNota()">Calcular Nota</button>
+      </div>
+      <div *ngIf="data.length > 0" class="col-12">
+        <div class="table-responsive p-0">
+          <br>
+            <table class="table table-bordered table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th>PROYECTO 1</th>
+                        <th>PROYECTO 2</th>
+                        <th>PROYECTO 3</th>
+                        <th>PROYECTO 4</th>
+                        <th>NOTA FINAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let row of data; let i=index">
+                      <tr>
+                        <ng-container *ngFor="let val of row; let i=index">
+                          <td>{{ val }}</td>
+                        </ng-container>
+                      </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+  </div>
+</section>
