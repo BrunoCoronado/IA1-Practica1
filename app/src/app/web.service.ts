@@ -15,7 +15,7 @@ export class WebService {
     return this.http.post(`${this.protocolo}${this.host}${this.path_raiz}/generar`, data).toPromise();
   }
 
-  async calcularNota(data){
-    return this.http.post(`${this.protocolo}${this.host}${this.path_raiz}/pacientes/actualizar/estado`, data).toPromise();
+  async obtenerBitacora(){
+    return this.http.get(`${this.protocolo}${this.host}${this.path_raiz}/bitacora`).toPromise();
   }
 }

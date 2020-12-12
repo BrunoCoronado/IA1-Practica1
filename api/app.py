@@ -3,6 +3,7 @@ from flask_api import FlaskAPI
 from flask_cors import CORS, cross_origin
 import random
 from statistics import mean 
+from datetime import datetime
 
 app = FlaskAPI(__name__)
 cors = CORS(app)
@@ -114,13 +115,13 @@ def verificarCriterio(poblacion):
         return None
     elif criterio == 2:
         for sol in poblacion:
-            if sol.fitness <= 10:
+            if sol.fitness <= 2:
                 return True
         return None 
     else:
         contador_soluciones = 0
         for sol in poblacion:
-            if sol.fitness <= 25:
+            if sol.fitness <= 5:
                 contador_soluciones += 1
 
         if contador_soluciones >= (tam_poblacion // 4):
@@ -191,6 +192,24 @@ def ejecutar():
     imprimirMejorSolucion(poblacion, generacion)
     return obtenerMejorSolucion(poblacion)
 
+def guardarBitacora(nombre, solucion):
+    f = open("bitacora.txt", "a+")
+    str_criterio = {
+        1: 'Maximo numero de generaciones (5000)',
+        2: 'Una solucion con fitness menor o igual a 2',
+        3: '25% de soluciones con fitness menor o igual a 5'
+    }
+    str_seleccion = {
+        1: 'Seleccion Aleatoria',
+        2: 'Seleccion Por Mejor Fitness',
+        3: 'Seleccion Por Torneo'
+    }
+
+    now = datetime.now()
+    f.write(now.strftime("%d/%m/%Y %H:%M:%S") + ';' + nombre + ';' + str_criterio[criterio] + ';' + str_seleccion[seleccion] + ';' + str(generacion) + ';[' + str(solucion.solucion[0]) + ',' + str(solucion.solucion[1]) + ',' + str(solucion.solucion[2]) + ',' + str(solucion.solucion[3]) + '];' + str(solucion.fitness) + '\n')
+    f.close()
+    return
+
 @app.route("/generar", methods=['POST'])
 @cross_origin()
 def generar():
@@ -208,12 +227,30 @@ def generar():
 
     solucion = ejecutar()
     
+    guardarBitacora(request.json['nombre'], solucion)
 
     return jsonify(
         solucion = solucion.solucion,
-        mensaje = 'Todo correcto, modelo generado',
+        mensaje = 'Modelo generado!',
         status = 200
     )
+
+@app.route("/bitacora", methods=['GET'])
+@cross_origin()
+def bitacora():
+    """
+    Obtener la Bitacora
+    """
+    
+    f = open("bitacora.txt", "r")
+    bitacora = f.read()
+
+    return jsonify(
+        bitacora = bitacora,
+        mensaje = 'Bitácora Obtenida!',
+        status = 200
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

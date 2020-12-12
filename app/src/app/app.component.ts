@@ -28,6 +28,10 @@ export class AppComponent implements OnInit {
 
   nc: any
 
+  nombreArchivo: string;
+
+  bitacora: any = [];
+
   constructor(private service: WebService, private utils: UtilsService) { }
 
   async ngOnInit(): Promise<void> {
@@ -35,6 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   uploadListener($event: any): void {  
+    this.nombreArchivo = this.csvReader.nativeElement.value;
     this.data = []
     try {
       if(!$event.srcElement.files[0].name.endsWith(".csv")){
@@ -76,6 +81,7 @@ export class AppComponent implements OnInit {
   }
 
   async generarModelo(){
+    this.bitacora = []
     if(this.data.length == 0){
       this.utils.mostrarError('Sin datos!')
       return
@@ -84,7 +90,8 @@ export class AppComponent implements OnInit {
     const data = {
       criterio: this.criterioFinalizacion,
       seleccion: this.seleccionPadres,
-      data: this.data
+      data: this.data,
+      nombre: this.nombreArchivo
     }
 
     this.utils.mostrarLoading()
@@ -119,5 +126,27 @@ export class AppComponent implements OnInit {
     }
     
     this.nc = (this.solucion[0]*this.notas.proyecto1) + (this.solucion[1]*this.notas.proyecto2) + (this.solucion[2]*this.notas.proyecto3) + (this.solucion[3]*this.notas.proyecto4)
+  }
+
+  async verBitacora(){
+    this.bitacora = []
+    this.utils.mostrarLoading()
+
+    const response: any = await this.service.obtenerBitacora();
+
+    this.utils.ocultarLoading()
+
+    if(response.status == 200){
+      this.data = []
+      this.utils.mostrarToast(response.mensaje)
+      let filas = response.bitacora.split(/\r\n|\n/)
+      filas.forEach(f => {
+        let columnas = f.split(/;/)
+        if(columnas[0])
+          this.bitacora.push(columnas)
+      });
+    }else{
+      this.utils.mostrarError(response.mensaje)
+    }
   }
 }

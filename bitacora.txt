@@ -1,0 +1,9 @@
+11/12/2020 18:44:09;C:\fakepath\Practica1_Entrada.csv;25% de soluciones con fitness menor o igual a 5;Seleccion Por Torneo;1419;[0.12343,0.18585,0.29572,0.40081];1.70894
+11/12/2020 18:44:29;C:\fakepath\Practica1_Entrada.csv;Una solucion con fitness menor o igual a 2;Seleccion Por Torneo;2496;[0.17775,0.14278,0.26563,0.40798];1.7934
+11/12/2020 18:45:31;C:\fakepath\Practica1_Entrada.csv;Maximo numero de generaciones (5000);Seleccion Por Torneo;5000;[0.1208,0.19207,0.29695,0.39734];2.27711
+11/12/2020 18:46:09;C:\fakepath\Practica1_Entrada.csv;Maximo numero de generaciones (5000);Seleccion Por Mejor Fitness;5000;[0.14904,0.13008,0.33264,0.38063];1.63931
+11/12/2020 18:46:27;C:\fakepath\Practica1_Entrada.csv;Una solucion con fitness menor o igual a 2;Seleccion Por Mejor Fitness;1966;[0.16271,0.12369,0.31549,0.4155];1.93628
+11/12/2020 18:46:32;C:\fakepath\Practica1_Entrada.csv;25% de soluciones con fitness menor o igual a 5;Seleccion Por Mejor Fitness;212;[0.15647,0.18301,0.26934,0.41737];3.65753
+11/12/2020 18:47:00;C:\fakepath\Practica1_Entrada.csv;Maximo numero de generaciones (5000);Seleccion Aleatoria;5000;[1.55043,-1.73091,0.29887,-0.66612];10803.24669
+11/12/2020 18:49:32;C:\fakepath\Practica1_Entrada.csv;Una solucion con fitness menor o igual a 2;Seleccion Aleatoria;30000;[-0.64983,1.09108,-0.57799,1.30964];2530.10243
+11/12/2020 18:52:25;C:\fakepath\Practica1_Entrada.csv;25% de soluciones con fitness menor o igual a 5;Seleccion Aleatoria;30000;[-1.6319,0.04049,0.35393,1.28939];5807.47662

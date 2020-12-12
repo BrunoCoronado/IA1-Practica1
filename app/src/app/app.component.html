@@ -14,12 +14,12 @@
           <div class="custom-control custom-radio">
             <input class="custom-control-input" type="radio" id="tipo2" name="radioTipo" [value]="2"
               [(ngModel)]="criterioFinalizacion">
-            <label for="tipo2" class="custom-control-label">Una solución con fitness menor o igual a 10</label>
+            <label for="tipo2" class="custom-control-label">Una solución con fitness menor o igual a 2</label>
           </div>
           <div class="custom-control custom-radio">
             <input class="custom-control-input" type="radio" id="tipo3" name="radioTipo" [value]="3"
               [(ngModel)]="criterioFinalizacion">
-            <label for="tipo3" class="custom-control-label">25% de soluciones con fitness menor o igual a 25</label>
+            <label for="tipo3" class="custom-control-label">25% de soluciones con fitness menor o igual a 5</label>
           </div>
         </div>
         <h3>Seleccione un Método de Selección de Padres</h3>
@@ -41,6 +41,7 @@
           </div>
         </div>
         <button type="submit" class="btn btn-primary btn-block" (click)="generarModelo()">Generar Modelo</button>
+        <button type="submit" class="btn btn-warning btn-block" (click)="verBitacora()">Ver Bitácora</button>
       </div>
       <div *ngIf="solucion.length > 0" class="col-6"> 
         <br>
@@ -69,6 +70,33 @@
         <h4 *ngIf="nc">Nota Predecida = {{nc}}</h4>
         <button type="submit" class="btn btn-primary btn-block" (click)="calcularNota()">Calcular Nota</button>
       </div>
+      <div *ngIf="bitacora.length > 0" class="col-12">
+        <div class="table-responsive p-0">
+          <br>
+            <table class="table table-bordered table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th>Fecha y Hora</th>
+                        <th>Archivo</th>
+                        <th>Criterio de Finalización</th>
+                        <th>Selección de Padres</th>
+                        <th>Generaciones</th>
+                        <th>Solución</th>
+                        <th>Fitness</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let row of bitacora; let i=index">
+                      <tr>
+                        <ng-container *ngFor="let val of row; let i=index">
+                          <td>{{ val }}</td>
+                        </ng-container>
+                      </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+      </div>
       <div *ngIf="data.length > 0" class="col-12">
         <div class="table-responsive p-0">
           <br>
@@ -93,7 +121,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+      </div>
     </div>
   </div>
 </section>
