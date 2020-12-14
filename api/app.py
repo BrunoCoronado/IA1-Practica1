@@ -67,19 +67,31 @@ def emparejar(padres):
 def seleccionarPadres(poblacion):
     global seleccion
     if seleccion == 1: #selecion aleatoria
-        indices = []
         padres = []
-        cantidad_padres = random.randint(2, tam_poblacion)
-        i = 0
-        while i < cantidad_padres:
-            index = random.randint(0, tam_poblacion - 1)
-            while index in indices:
-                index = random.randint(0, tam_poblacion - 1)            
-            indices.append(index)
-            padres.append(poblacion[index])    
-            i += 1
+
+        tmp = sorted(poblacion, key=lambda item: item.fitness, reverse=False)
+
+        padres.append(tmp[0])
+        padres.append(tmp[1])
+        padres.append(tmp[len(tmp) - 1])
+        padres.append(tmp[len(tmp) - 2])
 
         return padres
+
+
+        # indices = []
+        # padres = []
+        # cantidad_padres = random.randint(2, tam_poblacion)
+        # i = 0
+        # while i < cantidad_padres:
+        #     index = random.randint(0, tam_poblacion - 1)
+        #     while index in indices:
+        #         index = random.randint(0, tam_poblacion - 1)            
+        #     indices.append(index)
+        #     padres.append(poblacion[index])    
+        #     i += 1
+
+        # return padres
     elif seleccion == 2: #selecion por mejor fitness (mitad de la poblacion)
         return sorted(poblacion, key=lambda item: item.fitness, reverse=False)[:tam_poblacion//2]
     else: #selecion de los pares
@@ -106,8 +118,8 @@ def obtenerMejorSolucion(poblacion):
     return sorted(poblacion, key=lambda item: item.fitness, reverse=False)[0]
 
 def verificarCriterio(poblacion):
-    if generacion == 30000:
-        return True
+    # if generacion == 30000:
+    #     return True
     global criterio
     if criterio == 1: #maximo de 5000 generaciones
         if generacion == 5000:
@@ -115,7 +127,7 @@ def verificarCriterio(poblacion):
         return None
     elif criterio == 2:
         for sol in poblacion:
-            if sol.fitness <= 2:
+            if sol.fitness <= 1:
                 return True
         return None 
     else:
@@ -200,7 +212,7 @@ def guardarBitacora(nombre, solucion):
         3: '25% de soluciones con fitness menor o igual a 5'
     }
     str_seleccion = {
-        1: 'Seleccion Aleatoria',
+        1: 'Mejores y Peores Padres',
         2: 'Seleccion Por Mejor Fitness',
         3: 'Seleccion Por Torneo'
     }
